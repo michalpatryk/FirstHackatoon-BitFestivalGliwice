@@ -44,5 +44,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun addBubble(view: View) {
         // Do something in response to button
+        
     }
 }
