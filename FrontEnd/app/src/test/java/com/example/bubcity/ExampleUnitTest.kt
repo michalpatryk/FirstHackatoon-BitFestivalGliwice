@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.bubcity
 
 import org.junit.Test
 
