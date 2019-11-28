@@ -64,8 +64,23 @@ app.get('/signIn', (req, res) => {
     })
 })
 
+
+app.get('/login', (req, res) => {
+    User.findOne({ login: req.body.login }, (err, user) => {
+        if ((err) || (user == null)) res.json({ accepted: false })
+        else {
+            if (user.password == req.body.password) {
+                res.json({ accepted: true })
+            }
+            else
+                res.json({ accepted: false })
+        }
+    res.json({ accepted: true })
+    })
+})
+
 app.use(function (req, res, next) {
-    res.status(404).send("Sorry can't find that!")
+    res.status(404).send("This is not the addres you are looking for.")
 })
 
 
