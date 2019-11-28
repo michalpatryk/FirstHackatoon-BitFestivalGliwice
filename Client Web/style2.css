@@ -53,15 +53,12 @@ a:focus {
 .wrapper {
     display: flex;
     width: 100%;
+    align-items: stretch;
 }
 
 #sidebar {
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    z-index: 999;
+    min-width: 250px;
+    max-width: 250px;
     background: #7386D5;
     color: #fff;
     transition: all 0.3s;
@@ -149,18 +146,15 @@ a.article:hover {
 ----------------------------------------------------- */
 
 #content {
-    width: calc(100% - 250px);
-    padding: 40px;
+    width: 100%;
+    padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
-    position: absolute;
-    top: 0;
-    right: 0;
 }
-
-#content.active {
-    width: 100%;
-}
+#map {
+        height: 500px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }
 
 /* ---------------------------------------------------
     MEDIAQUERIES
@@ -172,12 +166,6 @@ a.article:hover {
     }
     #sidebar.active {
         margin-left: 0;
-    }
-    #content {
-        width: 100%;
-    }
-    #content.active {
-        width: calc(100% - 250px);
     }
     #sidebarCollapse span {
         display: none;
