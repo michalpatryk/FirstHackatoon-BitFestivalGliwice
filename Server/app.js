@@ -79,6 +79,28 @@ app.get('/login', (req, res) => {
     })
 })
 
+app.get('/vote', async (req, res) => {
+    // Bubble.findById(req.body.bubbleId.ObjectId, async (errb, bub) => {
+    //     if (bub != null) {
+    //         Bubble.find({ _id: req.body.bubbleId.ObjectId, like: { $all: [req.body.userID.ObjectId] } }, async (errt, tab) => {
+    //             if (tab == null) {
+    //                 await Bubble.updateOne({ _id: req.body.bubbleId.ObjectId }, {  $push: { like: req.body.userID.ObjectId } });
+    //                 res.json({ accepted: true })
+    //             } else {
+    //                 res.json({ tab: tab })
+    //             }
+    //         })
+    //     }
+    // })
+    if (req.body.vote == "like") {
+        await Bubble.updateOne({ _id: req.body.bubbleId.ObjectId }, {  $push: { like: req.body.userID.ObjectId } });
+        res.json({ accepted: true })
+    } else {
+        await Bubble.updateOne({ _id: req.body.bubbleId.ObjectId }, {  $push: { dislike: req.body.userID.ObjectId } });
+        res.json({ accepted: true })
+    }
+})
+
 app.use(function (req, res, next) {
     res.status(404).send("This is not the addres you are looking for.")
 })
