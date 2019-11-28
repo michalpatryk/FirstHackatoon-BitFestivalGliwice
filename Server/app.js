@@ -25,6 +25,7 @@ const userScheme = {
 }
 
 const Bubble = mongoose.model("Bubble", bubbleScheme);
+const User = mongoose.model("User", userScheme);
 
 app.use(bodyparser.json());
 
@@ -36,20 +37,32 @@ app.get('/', (req, res) =>
 app.get('/addBubble', (req, res) => {
 
     const bubble = new Bubble({
-        login: req.body.login
+        type: req.body.type,
+        cordX: req.body.cordX,
+        cordY: req.body.cordY,
+        userID: req.body.userID.ObjectId,
+        description: req.body.description
     })
     bubble.save()
     res.json({ accepted: true })
 })
 
-// app.get('/signIn', (req, res) => {
-
-//     const bubble = new Bubble({
-//         login: req.body.login
-//     })
-//     bubble.save()
-//     res.json({ accepted: true })
-// })
+app.get('/signIn', (req, res) => {
+    User.findOne({ login: req.body.login }, (err, user) => {
+        if (user == null) {
+            const newUser = new User ({
+                login: req.body.login,
+                password: req.body.password,
+                imie: req.body.imie,
+                nazwisko: req.body.nazwisko
+            })
+            newUser.save()
+            res.json({ accepted: true })
+        } else {
+            res.json({ accepted: false })
+        }
+    })
+})
 
 app.use(function (req, res, next) {
     res.status(404).send("Sorry can't find that!")
