@@ -9,10 +9,21 @@
     tools:context=".MapsActivity" >
 
     <Button
+        android:id="@+id/addBubble"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
         android:text="Photo"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:paddingRight="10dp"/>
+
+    <Button
+        android:id="@+id/contextOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:text="Menu"
         android:padding="10dp"
         android:layout_marginTop="20dp"
         android:paddingRight="10dp"/>
