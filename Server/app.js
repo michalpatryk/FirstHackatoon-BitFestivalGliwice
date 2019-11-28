@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-mongoose.connect('mongodb+srv://admin:admin@sekcja-spalonych-tostow-ppujf.mongodb.net/bitfestival?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://admin:admin@sekcja-spalonych-tostow-ppujf.mongodb.net/bitfestival?retryWrites=true&w=majority',{ useUnifiedTopology: true });
 
 const bubbleScheme = {
     type: String,
@@ -76,6 +76,13 @@ app.get('/login', (req, res) => {
                 res.json({ accepted: false })
         }
     res.json({ accepted: true })
+    })
+})
+
+app.get('/getBubbles', (req, res) => {
+    Bubble.find({ cordX: { $gt: req.body.cordXmin }, cordX: { $lt: req.body.cordXmax }, cordY: { $gt: req.body.cordYmin }, cordY: { $lt: req.body.cordYmax } }, (err, bubbles) => {
+        if ((err) || (bubbles == null)) res.json({ bubbles: [] })
+        else res.json({ bubbles: bubbles })
     })
 })
 
