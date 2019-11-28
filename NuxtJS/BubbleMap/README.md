@@ -1,6 +1,6 @@
-# 1st
+# BubbleMap
 
-> My luminous Nuxt.js project
+> My glorious Nuxt.js project
 
 ## Build Setup
 

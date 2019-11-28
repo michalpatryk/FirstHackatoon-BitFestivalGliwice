@@ -1,5 +1,5 @@
 
-export default {
+module.exports = {
   mode: 'universal',
   /*
   ** Headers of the page
@@ -38,6 +38,8 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    // Doc: https://bootstrap-vue.js.org
+    'bootstrap-vue/nuxt',
   ],
   /*
   ** Build configuration

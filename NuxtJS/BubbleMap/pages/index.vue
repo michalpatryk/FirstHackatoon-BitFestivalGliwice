@@ -3,10 +3,10 @@
     <div>
       <logo />
       <h1 class="title">
-        1st
+        BubbleMap
       </h1>
       <h2 class="subtitle">
-        My luminous Nuxt.js project
+        My glorious Nuxt.js project
       </h2>
       <div class="links">
         <a
