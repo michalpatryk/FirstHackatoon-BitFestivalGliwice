@@ -5,13 +5,13 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-mongoose.connect('mongodb+srv://admin:admin@sekcja-spalonych-tostow-ppujf.mongodb.net/bitfestival?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://admin:admin@sekcja-spalonych-tostow-ppujf.mongodb.net/bitfestival?retryWrites=true&w=majority',{ useUnifiedTopology: true });
 
 const bubbleScheme = {
     type: String,
     cordX: Number,
     cordY: Number,
-    userID: mongoose.Schema.Types.ObjectId,
+    userId: mongoose.Schema.Types.ObjectId,
     description: String,
     like: [mongoose.Schema.Types.ObjectId],
     dislike: [mongoose.Schema.Types.ObjectId]
@@ -40,7 +40,7 @@ app.get('/addBubble', (req, res) => {
         type: req.body.type,
         cordX: req.body.cordX,
         cordY: req.body.cordY,
-        userID: req.body.userID.ObjectId,
+        userId: req.body.userId.ObjectId,
         description: req.body.description
     })
     bubble.save()
@@ -82,9 +82,9 @@ app.get('/login', (req, res) => {
 app.get('/vote', async (req, res) => {
     // Bubble.findById(req.body.bubbleId.ObjectId, async (errb, bub) => {
     //     if (bub != null) {
-    //         Bubble.find({ _id: req.body.bubbleId.ObjectId, like: { $all: [req.body.userID.ObjectId] } }, async (errt, tab) => {
+    //         Bubble.find({ _id: req.body.bubbleId.ObjectId, like: { $all: [req.body.userId.ObjectId] } }, async (errt, tab) => {
     //             if (tab == null) {
-    //                 await Bubble.updateOne({ _id: req.body.bubbleId.ObjectId }, {  $push: { like: req.body.userID.ObjectId } });
+    //                 await Bubble.updateOne({ _id: req.body.bubbleId.ObjectId }, {  $push: { like: req.body.userId.ObjectId } });
     //                 res.json({ accepted: true })
     //             } else {
     //                 res.json({ tab: tab })
@@ -93,12 +93,19 @@ app.get('/vote', async (req, res) => {
     //     }
     // })
     if (req.body.vote == "like") {
-        await Bubble.updateOne({ _id: req.body.bubbleId.ObjectId }, {  $push: { like: req.body.userID.ObjectId } });
+        await Bubble.updateOne({ _id: req.body.bubbleId.ObjectId }, {  $push: { like: req.body.userId.ObjectId } });
         res.json({ accepted: true })
     } else {
-        await Bubble.updateOne({ _id: req.body.bubbleId.ObjectId }, {  $push: { dislike: req.body.userID.ObjectId } });
+        await Bubble.updateOne({ _id: req.body.bubbleId.ObjectId }, {  $push: { dislike: req.body.userId.ObjectId } });
         res.json({ accepted: true })
     }
+})
+
+app.get('/getBubbles', (req, res) => {
+    Bubble.find({ cordX: { $gt: req.body.cordXmin }, cordX: { $lt: req.body.cordXmax }, cordY: { $gt: req.body.cordYmin }, cordY: { $lt: req.body.cordYmax } }, (err, bubbles) => {
+        if ((err) || (bubbles == null)) res.json({ bubbles: [] })
+        else res.json({ bubbles: bubbles })
+    })
 })
 
 app.use(function (req, res, next) {
