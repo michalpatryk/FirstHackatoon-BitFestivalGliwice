@@ -41,12 +41,56 @@ app.get('/', (req, res) => {
     })
 })
 
+app.get('/index.html', (req, res) => {
+    var http = require('http'),
+    fs = require('fs');
+
+
+    fs.readFile('html/index.html', function (err, html) {
+        res.write(html);  
+        res.end();
+    })
+})
+
 app.get('/login.html', (req, res) => {
     var http = require('http'),
     fs = require('fs');
 
 
     fs.readFile('html/login.html', function (err, html) {
+        res.write(html);  
+        res.end();
+    })
+})
+
+app.get('/popular.html', (req, res) => {
+    var http = require('http'),
+    fs = require('fs');
+
+
+    fs.readFile('html/popular.html', function (err, html) {
+        res.write(html);  
+        res.end();
+    })
+})
+
+app.get('/rejestracja.html', (req, res) => {
+    var http = require('http'),
+    fs = require('fs');
+
+
+    fs.readFile('html/rejestracja.html', function (err, html) {
+        res.write(html);  
+        res.end();
+    })
+})
+
+app.get('/requests.html', (req, res) => {
+    var http = require('http'),
+    fs = require('fs');
+
+
+    fs.readFile('html/requests.html', function (err, html) {
         res.write(html);  
         res.end();
     })
