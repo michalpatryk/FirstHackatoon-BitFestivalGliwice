@@ -1,9 +1,18 @@
-const express = require('express');
-const bodyparser = require('body-parser')
+const express = require('express')
+const mongoose = require("mongoose")
+const bodyParser = require('body-parser')
+const app = express()
 
-const mongoose = require("mongoose");
 
-const app = express();
+app.use(bodyParser.json())
+
+app.use(
+    bodyParser.urlencoded({
+      extended: true
+    })
+  )
+
+
 mongoose.connect('mongodb+srv://admin:admin@sekcja-spalonych-tostow-ppujf.mongodb.net/bitfestival?retryWrites=true&w=majority',{ useUnifiedTopology: true });
 
 const bubbleScheme = {
@@ -26,7 +35,7 @@ const userScheme = {
 const Bubble = mongoose.model("Bubble", bubbleScheme);
 const User = mongoose.model("User", userScheme);
 
-app.use(bodyparser.json());
+
 
 app.get('/', (req, res) => {
     var http = require('http'),
@@ -83,7 +92,7 @@ app.get('/signIn', (req, res) => {
 
 app.get('/login', async (req, res) => {
     await User.findOne({ login: req.body.login }, (err, user) => {
-        if ((user == null)) res.json({ accepted: false })
+        if ((user == null)) res.json({ accepted: req.body })
         else {
             if (user.password == req.body.password) {
                 res.json({ accepted: true })
