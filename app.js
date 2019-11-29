@@ -96,6 +96,17 @@ app.get('/requests.html', (req, res) => {
     })
 })
 
+app.get('/addBubble.html', (req, res) => {
+    var http = require('http'),
+    fs = require('fs');
+
+
+    fs.readFile('html/addBubble.html', function (err, html) {
+        res.write(html);
+        res.end();
+    })
+})
+
 app.get('/addBubble', (req, res) => {
 
     const bubble = new Bubble({

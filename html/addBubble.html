@@ -32,17 +32,27 @@
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
                     </button>
+					<span></span>
 
                 </div>
             </nav>
 
-            <div id="map"></div>
-			<div id="mydiv">
-  <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
-  <script src="script.js"></script>
-  <div id="mydivheader".draggable() onmouseup="getCords()">+</div>
-
-</div>
+            <div class="container-fluid mt-3">
+        <!-- <form> -->
+            <label for="typeForm">Typ zgłoszenia</label>
+            <select class="form-control" id="typeForm">
+                <option>Śmieci</option>
+                <option>Pomysł</option>
+                <option>Inicjatywa obywatelska</option>
+                <option>Problem</option>
+            </select>
+            <div class="form-group">
+                <label for="descriptionForm" class="mt-3">Opisz zgłoszenie</label>
+                <textarea type="text" class="form-control" id="descriptionForm"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="send()" maxlength="200">Wyślij</button>
+        <!-- </form> -->
+    </div>
         </div>
     </div>
 
@@ -61,62 +71,46 @@
         });
     </script>
     <script>
-        
-    // globalne zmienne do trzymanai koordynatów
-    var lat = null;
-    var lng = null;
-
-     // Initialize and add the map
-
-    function initMap() {
-
-        var obj = {
-            cordYmin: 0,
-            cordYmax: 100,
-            cordXmin: 0,
-            cordXmax: 100
-        };
-        
-        $.ajax({
-            type: "GET",
-            url: "/getBubbles/",
-            data: obj,
-            success: function (ret) {
-                console.log(ret);
-                var pointsArray = new Array(ret.bubbles.length);
-                var map = null;
-                var markersArray = new Array(ret.bubbles.length);
-                for (var i = 0; i < ret.bubbles.length; i++) {
-                    pointsArray[i] = { lat: ret.bubbles[i].cordX, lng: ret.bubbles[i].cordY };
-                    console.log(pointsArray[i]);
-                    if (i == 0)
-                        map = new google.maps.Map(document.getElementById('map'), {zoom: 12, center: pointsArray[0]});
-                    markersArray[i] = new google.maps.Marker({position: pointsArray[i], map: map})
-                }
-                google.maps.event.addListener(map, 'mousemove', function (event) {
-                    displayCoordinates(event.latLng);               
+        function findGetParameter(parameterName) {
+            var result = null,
+                tmp = [];
+            location.search
+                .substr(1)
+                .split("&")
+                .forEach(function (item) {
+                tmp = item.split("=");
+                if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
                 });
+            return result;
+        };
 
-                function displayCoordinates(pnt) {
-                    lat = pnt.lat();
-                    lat = lat.toFixed(8);
-                    lng = pnt.lng();
-                    lng = lng.toFixed(8);
-                    console.log("Latitude: " + lat + "  Longitude: " + lng);
+        function send() {
+            var typeForm = document.getElementById( "typeForm" );
+            var x = findGetParameter("x");
+            var y = findGetParameter("y");
+
+            var obj = {
+                type: typeForm.options[ typeForm.selectedIndex ].value,
+                cordX: x,
+                cordY: y,
+                userId: { ObjectId: "5ddffa1c49b6c702b9b47ab3" },
+                description: document.getElementById("descriptionForm").value
+            };
+            $.ajax({
+                type: "GET",
+                url: "/addBubble/",
+                data: obj,
+                success: function (data) {
+                    if (data.accepted == true) {
+                        window.alert("Zgłoszenie dodano pomyślnie!");
+                        window.location.replace("index.html");
+                    }
                 }
-            }
-        });
-
-    }
-
-    function getCords() {
-        window.location.replace("addBubble.html?x="+lat+"&y="+lng);
-    }
-
+            });
+        }
     </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIkmqARd6szWduosYeKy0B4yQPTY6vTwA&callback=initMap">
-    </script>
+
 </body>
 
 </html>
+
