@@ -1,13 +1,11 @@
 const express = require('express')
 const mongoose = require("mongoose")
 const bodyParser = require('body-parser')
+const http = require('http')
 const app = express()
 
-
 app.use(bodyParser.json())
-//app.use(bodyParser.urlencoded())
-
-
+app.use(express.static(__dirname + '/public'));
 
 mongoose.connect('mongodb+srv://admin:admin@sekcja-spalonych-tostow-ppujf.mongodb.net/bitfestival?retryWrites=true&w=majority',{ useUnifiedTopology: true, useNewUrlParser: true });
 
@@ -32,24 +30,12 @@ const Bubble = mongoose.model("Bubble", bubbleScheme);
 const User = mongoose.model("User", userScheme);
 
 
-
 app.get('/', (req, res) => {
     var http = require('http'),
     fs = require('fs');
 
 
     fs.readFile('../Client Web/index.html', function (err, html) {
-        res.write(html);  
-        res.end();
-    })
-})
-
-app.get('/login.html', (req, res) => {
-    var http = require('http'),
-    fs = require('fs');
-
-
-    fs.readFile('../Client Web/login.html', function (err, html) {
         res.write(html);  
         res.end();
     })
@@ -132,7 +118,6 @@ app.get('/getBubbles', (req, res) => {
 app.use(function (req, res, next) {
     res.status(404).send("This is not the addres you are looking for.")
 })
-
 
 let port = process.env.PORT;
 if (port == null || port == "") {
