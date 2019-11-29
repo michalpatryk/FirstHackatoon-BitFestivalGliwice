@@ -66,10 +66,10 @@
 function initMap() {
 
     var obj = {
-        cordXmin: 50,
-        cordXmax: 51,
-        cordYmin: 18,
-        cordYmax: 19
+        cordYmin: 0,
+        cordYmax: 100,
+        cordXmin: 0,
+        cordXmax: 100
     };
     
     $.ajax({
@@ -77,11 +77,13 @@ function initMap() {
         url: "/getBubbles/",
         data: obj,
         success: function (ret) {
+            console.log(ret);
             var pointsArray = new Array(ret.bubbles.length);
             var map = null;
-            var markersArray = new Array(ret.bubbleslength);
+            var markersArray = new Array(ret.bubbles.length);
             for (var i = 0; i < ret.bubbles.length; i++) {
                 pointsArray[i] = { lat: ret.bubbles[i].cordX, lng: ret.bubbles[i].cordY };
+                console.log(pointsArray[i]);
                 if (i == 0)
                     map = new google.maps.Map(document.getElementById('map'), {zoom: 12, center: pointsArray[0]});
                 markersArray[i] = new google.maps.Marker({position: pointsArray[i], map: map})
