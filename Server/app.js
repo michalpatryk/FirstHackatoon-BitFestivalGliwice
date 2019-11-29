@@ -4,7 +4,6 @@ const bodyparser = require('body-parser')
 const mongoose = require("mongoose");
 
 const app = express();
-
 mongoose.connect('mongodb+srv://admin:admin@sekcja-spalonych-tostow-ppujf.mongodb.net/bitfestival?retryWrites=true&w=majority',{ useUnifiedTopology: true });
 
 const bubbleScheme = {
@@ -29,10 +28,27 @@ const User = mongoose.model("User", userScheme);
 
 app.use(bodyparser.json());
 
-app.get('/', (req, res) =>
+app.get('/', (req, res) => {
+    var http = require('http'),
+    fs = require('fs');
 
-    res.send("helloword00")
-)
+
+    fs.readFile('../Client Web/index.html', function (err, html) {
+        res.write(html);  
+        res.end();
+    })
+})
+
+app.get('/login.html', (req, res) => {
+    var http = require('http'),
+    fs = require('fs');
+
+
+    fs.readFile('../Client Web/login.html', function (err, html) {
+        res.write(html);  
+        res.end();
+    })
+})
 
 app.get('/addBubble', (req, res) => {
 
@@ -65,17 +81,17 @@ app.get('/signIn', (req, res) => {
 })
 
 
-app.get('/login', (req, res) => {
-    User.findOne({ login: req.body.login }, (err, user) => {
-        if ((err) || (user == null)) res.json({ accepted: false })
+app.get('/login', async (req, res) => {
+    await User.findOne({ login: req.body.login }, (err, user) => {
+        if ((user == null)) res.json({ accepted: false })
         else {
             if (user.password == req.body.password) {
                 res.json({ accepted: true })
             }
             else
-                res.json({ accepted: false })
+                res.json({ login: req.body.login, password: req.body.password })
         }
-    res.json({ accepted: true })
+        // res.json({ accepted: true })
     })
 })
 
