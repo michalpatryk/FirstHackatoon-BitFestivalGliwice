@@ -1,0 +1,33 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "js-tokens": "^5.0.0",
+    "loose-envify": "^1.4.0",
+    "mem": "^6.0.0",
+    "mongodb": "^3.3.4",
+    "mongoose": "^5.7.12",
+    "mongoose-unique-validator": "^2.0.3",
+    "object-assign": "^4.1.1",
+    "prop-types": "^15.7.2",
+    "urlencode": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": "8.10.0"
+  },
+  "repositiory": {
+    "type": "git",
+    "url": "https://gitlab.com/bitfesthackaton/sekcja-spalonych-tostow.git"
+  }
+}

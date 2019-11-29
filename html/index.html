@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>BubbleMap</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="style2.css">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <script src="components.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="sidebar"></div>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+
+                </div>
+            </nav>
+
+            <div id="map"></div>
+			<div id="mydiv">
+  <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+  <script src="script.js"></script>
+  <div id="mydivheader".draggable() onmouseup="getCords()">+</div>
+
+</div>
+        </div>
+    </div>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+    <script>
+        
+    // globalne zmienne do trzymanai koordynatów
+    var lat = null;
+    var lng = null;
+
+     // Initialize and add the map
+
+    function initMap() {
+
+        var obj = {
+            cordYmin: 0,
+            cordYmax: 100,
+            cordXmin: 0,
+            cordXmax: 100
+        };
+        
+        $.ajax({
+            type: "GET",
+            url: "/getBubbles/",
+            data: obj,
+            success: function (ret) {
+                console.log(ret);
+                var pointsArray = new Array(ret.bubbles.length);
+                var map = null;
+                var markersArray = new Array(ret.bubbles.length);
+                for (var i = 0; i < ret.bubbles.length; i++) {
+                    pointsArray[i] = { lat: ret.bubbles[i].cordX, lng: ret.bubbles[i].cordY };
+                    console.log(pointsArray[i]);
+                    if (i == 0)
+                        map = new google.maps.Map(document.getElementById('map'), {zoom: 12, center: pointsArray[0]});
+                    markersArray[i] = new google.maps.Marker({position: pointsArray[i], map: map})
+                }
+                google.maps.event.addListener(map, 'mousemove', function (event) {
+                    displayCoordinates(event.latLng);               
+                });
+
+                function displayCoordinates(pnt) {
+                    lat = pnt.lat();
+                    lat = lat.toFixed(8);
+                    lng = pnt.lng();
+                    lng = lng.toFixed(8);
+                    console.log("Latitude: " + lat + "  Longitude: " + lng);
+                }
+            }
+        });
+
+    }
+
+    function getCords() {
+        window.location.replace("addBubble.html?x="+lat+"&y="+lng);
+    }
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIkmqARd6szWduosYeKy0B4yQPTY6vTwA&callback=initMap">
+    </script>
+</body>
+</html>
