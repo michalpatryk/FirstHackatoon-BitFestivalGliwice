@@ -177,6 +177,14 @@ app.get('/getBubblesForUser', (req, res) => {
     })
 })
 
+app.get('/getBubblesAllBest', (req, res) => {
+    Bubble.find({}, (err, bubbles) => {
+        if ((err) || (bubbles == null)) res.json({ bubbles: [] })
+        else res.json({ bubbles: bubbles })
+    })
+})
+
+
 
 app.use(function (req, res, next) {
     res.status(404).send("This is not the addres you are looking for.")
