@@ -13,7 +13,8 @@
     "mongoose": "^5.7.12",
     "mongoose-unique-validator": "^2.0.3",
     "object-assign": "^4.1.1",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "urlencode": "^1.1.0"
   },
   "devDependencies": {},
   "scripts": {
