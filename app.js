@@ -154,11 +154,11 @@ app.get('/vote', async (req, res) => {
     //         })
     //     }
     // })
-    if (req.body.vote == "like") {
-        await Bubble.updateOne({ _id: req.body.bubbleId.ObjectId }, {  $push: { like: req.body.userId.ObjectId } });
+    if (req.query.vote == "like") {
+        await Bubble.updateOne({ _id: req.query.bubbleId.ObjectId }, {  $push: { like: req.query.userId.ObjectId } });
         res.json({ accepted: true })
     } else {
-        await Bubble.updateOne({ _id: req.body.bubbleId.ObjectId }, {  $push: { dislike: req.body.userId.ObjectId } });
+        await Bubble.updateOne({ _id: req.query.bubbleId.ObjectId }, {  $push: { dislike: req.query.userId.ObjectId } });
         res.json({ accepted: true })
     }
 })

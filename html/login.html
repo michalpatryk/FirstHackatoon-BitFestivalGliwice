@@ -79,7 +79,15 @@
             $.ajax({
                 type: "GET",
                 url: "/login/",
-                data: obj
+                data: obj,
+                success: function (data) {
+                    if (data.accepted == true) {
+                        window.alert("Zostałeś zalogowany pomyślnie!");
+                        window.location.replace("index.html");
+                    } else {
+                        window.alert("Nieprawidłowe dane!");
+                    }
+                }
             });
         };
         

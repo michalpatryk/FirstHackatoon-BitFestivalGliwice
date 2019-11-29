@@ -39,6 +39,7 @@
             <div class="card">
                 <ul class="list-group list-group-flush" id="requestList">
                 </ul>
+                <div style="text-align: right" id="counter"></div>
             </div>
 
         </div>
@@ -66,9 +67,16 @@
         data: { "ObjectId" : "5de057681c9d4400004e4030" },
         success: function (ret) {
             var list = document.getElementById("requestList");
+            var sumaLike = 0;
+            var sumaDislike = 0;
             for (var i = 0; i < ret.bubbles.length; i++) {
-                list.innerHTML += '<li class="list-group-item"><b>'+ret.bubbles[i].type+'</b> '+ret.bubbles[i].description+'</li>';
+                list.innerHTML += '<li class="list-group-item"><div class="d-block"><b>'+ret.bubbles[i].type+'</b> '+ret.bubbles[i].description+'</div><div align="right" class="d-block">'+ret.bubbles[i].like.length
+                        +' <img src="img/thumb_up-24px.svg"> <img src="img/thumb_down-24px.svg"> '+ret.bubbles[i].dislike.length+'</div></li>';
+                sumaLike += ret.bubbles[i].like.length;
+                sumaDislike += ret.bubbles[i].dislike.length;
             }
+            document.getElementById("counter").innerHTML = '<li class="list-group-item border-0"><div align="right" class="d-block"><span class="mr-3">Porządny obywatel:</span>'+sumaLike
+                        +' <img src="img/thumb_up-24px.svg"> <img src="img/thumb_down-24px.svg"> '+sumaDislike+'</div></li>';
         }
     });
     </script>
