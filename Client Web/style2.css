@@ -178,8 +178,10 @@ a.article:hover {
 }
 
 #mydivheader {
+	width : 40px;
+	height : 40px;
   padding: 10px;
-  border-radius: 500%;
+  border-radius: 50%;
   cursor: move;
   z-index: 10;
   background-color: #2196F3;
