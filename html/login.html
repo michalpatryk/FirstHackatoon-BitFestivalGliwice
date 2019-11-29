@@ -69,21 +69,21 @@
         });
     </script>
     <script>
-            function login() {
-                var obj = {
-                    login: document.getElementById("loginForm").value,
-                    password: document.getElementById("passwordForm").value
-                };
-               
-               // var formData = JSON.stringify(obj);
-                $.ajax({
-                    type: "GET",
-                    url: "/login/",
-                    data: obj,
-                });
+        function login() {
+            var obj = {
+                login: document.getElementById("loginForm").value,
+                password: document.getElementById("passwordForm").value
             };
             
-        </script>
+            // var formData = JSON.stringify(obj);
+            $.ajax({
+                type: "GET",
+                url: "/login/",
+                data: obj
+            });
+        };
+        
+    </script>
 
 </body>
 

@@ -109,17 +109,17 @@ app.get('/addBubble', (req, res) => {
     res.json({ accepted: true })
 })
 
-app.get('/signIn', (req, res) => {
-    User.findOne({ login: req.body.login }, (err, user) => {
+app.get('/signin', (req, res) => {
+    User.findOne({ login: req.query.login }, (err, user) => {
         if (user == null) {
             const newUser = new User ({
-                login: req.body.login,
-                password: req.body.password,
-                imie: req.body.imie,
-                nazwisko: req.body.nazwisko
+                login: req.query.login,
+                password: req.query.password,
+                imie: req.query.imie,
+                nazwisko: req.query.nazwisko
             })
             newUser.save()
-            res.json({ accepted: true })
+            res.json({ accepted: req.query })
         } else {
             res.json({ accepted: false })
         }

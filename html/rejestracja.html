@@ -38,32 +38,32 @@
             </nav>
 
             <div class="container-fluid mt-3">
-        <form>
+        <!-- <form> -->
             <div class="form-group">
-                <label for="exampleInputEmail1">Adres email</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <label for="emailForm">Adres email</label>
+                <input type="email" class="form-control" id="emailForm" aria-describedby="emailHelp">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Hasło</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
+                <label for="passwordForm">Hasło</label>
+                <input type="password" class="form-control" id="passwordForm">
             </div>
 			 <div class="form-group">
-                <label for="exampleInputPassword1">Imie</label>
-                <input type="imie" class="form-control" id="exampleInputPassword1">
+                <label for="imieForm">Imie</label>
+                <input type="text" class="form-control" id="imieForm">
             </div>
 			<div class="form-group">
-                <label for="exampleInputPassword1">Nazwisko</label>
-                <input type="nazwisko" class="form-control" id="exampleInputPassword1">
+                <label for="nazwiskoForm">Nazwisko</label>
+                <input type="text" class="form-control" id="nazwiskoForm">
             </div>
-            <button type="submit" class="btn btn-primary">Wyślij</button>
-						<a class="btn btn-primary" href = "login2.html">Powrót do logowania</a>
-        </form>
+            <button type="submit" class="btn btn-primary" onclick="register()">Wyślij</button>
+            <a class="btn btn-primary" href = "login2.html">Powrót do logowania</a>
+        <!-- </form> -->
     </div>
         </div>
     </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
@@ -75,6 +75,30 @@
                 $('#sidebar').toggleClass('active');
             });
         });
+    </script>
+    <script>
+        function register() {
+            var obj = {
+                login: document.getElementById("emailForm").value,
+                password: document.getElementById("passwordForm").value,
+                imie: document.getElementById("imieForm").value,
+                nazwisko: document.getElementById("nazwiskoForm").value
+            };
+            
+            // var formData = JSON.stringify(obj);
+            $.ajax({
+                type: "GET",
+                url: "/signin/",
+                data: obj,
+                success: function (ret) {
+                    if (ret.accepted == false)
+                        window.alert("Użytkownik o danym adresie email już istnieje!");
+                    else
+                        window.alert("Pomyślnie zarejestrowano użytkownika!");
+                }
+            });
+        };
+        
     </script>
 
 </body>
