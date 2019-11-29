@@ -88,13 +88,13 @@ app.get('/signIn', (req, res) => {
 
 app.get('/login', async (req, res) => {
     await User.findOne({ login: req.query.login }, (err, user) => {
-                    if ((user == null)) res.json({ accepted: req.query.nazwa })
+                    if ((user == null)) res.json({ accepted: false })
         else {
-            if (user.password == req.body.password) {
+            if (user.password == req.query.password) {
                 res.json({ accepted: true })
             }
             else
-                res.json({ login: req.body.login, password: req.body.password })
+                res.json({ accepted: false })
         }
         // res.json({ accepted: true })
     })

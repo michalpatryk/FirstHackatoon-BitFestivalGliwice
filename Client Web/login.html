@@ -47,12 +47,12 @@
                 login: document.getElementById("loginForm").value,
                 password: document.getElementById("passwordForm").value
             };
-            obj.serializeArray();
-            var formData = JSON.stringify(obj);
+           
+           // var formData = JSON.stringify(obj);
             $.ajax({
                 type: "GET",
                 url: "http://127.0.0.1:8080/login/",
-                data: {nazwa : formData},
+                data: obj,
             });
         };
         
