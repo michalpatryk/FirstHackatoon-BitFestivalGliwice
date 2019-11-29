@@ -35,7 +35,18 @@ app.get('/', (req, res) => {
     fs = require('fs');
 
 
-    fs.readFile('../Client Web/index.html', function (err, html) {
+    fs.readFile('html/index.html', function (err, html) {
+        res.write(html);  
+        res.end();
+    })
+})
+
+app.get('/login.html', (req, res) => {
+    var http = require('http'),
+    fs = require('fs');
+
+
+    fs.readFile('html/login.html', function (err, html) {
         res.write(html);  
         res.end();
     })
