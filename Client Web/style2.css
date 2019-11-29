@@ -168,7 +168,23 @@ a.article:hover {
 	border-radius: 95%;
 	display: inline-block;
 }
+#mydiv {
+  position: absolute;
+  z-index: 9;
+  background-color: #f1f1f1;
+  border: 1px solid #d3d3d3;
+  text-align: center;
+  border-radius: 50%;
+}
 
+#mydivheader {
+  padding: 10px;
+  border-radius: 50%;
+  cursor: move;
+  z-index: 10;
+  background-color: #2196F3;
+  color: #fff;
+}
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
