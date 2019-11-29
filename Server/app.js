@@ -5,12 +5,8 @@ const app = express()
 
 
 app.use(bodyParser.json())
+//app.use(bodyParser.urlencoded())
 
-app.use(
-    bodyParser.urlencoded({
-      extended: true
-    })
-  )
 
 
 mongoose.connect('mongodb+srv://admin:admin@sekcja-spalonych-tostow-ppujf.mongodb.net/bitfestival?retryWrites=true&w=majority',{ useUnifiedTopology: true });
@@ -91,8 +87,8 @@ app.get('/signIn', (req, res) => {
 
 
 app.get('/login', async (req, res) => {
-    await User.findOne({ login: req.body.login }, (err, user) => {
-        if ((user == null)) res.json({ accepted: req.body })
+    await User.findOne({ login: req.query.login }, (err, user) => {
+                    if ((user == null)) res.json({ accepted: req.query.nazwa })
         else {
             if (user.password == req.body.password) {
                 res.json({ accepted: true })
