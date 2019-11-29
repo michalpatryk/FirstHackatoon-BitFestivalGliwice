@@ -47,7 +47,7 @@
     </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
@@ -64,20 +64,32 @@
 // Initialize and add the map
 
 function initMap() {
-  // The location of Uluru
-  var uluru = {lat: 50.2945, lng: 18.6714};
-  // The map, centered at Uluru
-  var map = new google.maps.Map(
-      document.getElementById('map'), {zoom: 12, center: uluru});
-  // The marker, positioned at Uluru
-  var marker = new google.maps.Marker({position: uluru, map: map});
+
+    var obj = {
+        cordXmin: 50,
+        cordXmax: 51,
+        cordYmin: 18,
+        cordYmax: 19
+    };
+    
+    $.ajax({
+        type: "GET",
+        url: "/getBubbles/",
+        data: obj,
+        success: function (ret) {
+            var pointsArray = new Array(ret.bubbles.length);
+            var map = null;
+            var markersArray = new Array(ret.bubbleslength);
+            for (var i = 0; i < ret.bubbles.length; i++) {
+                pointsArray[i] = { lat: ret.bubbles[i].cordX, lng: ret.bubbles[i].cordY };
+                if (i == 0)
+                    map = new google.maps.Map(document.getElementById('map'), {zoom: 12, center: pointsArray[0]});
+                markersArray[i] = new google.maps.Marker({position: pointsArray[i], map: map})
+            }
+        }
+    });
 }
     </script>
-    <!--Load the API from the specified URL
-    * The async attribute allows the browser to render the page while the API loads
-    * The key parameter will contain your own API key (which is not needed for this tutorial)
-    * The callback parameter executes the initMap() function
-    -->
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIkmqARd6szWduosYeKy0B4yQPTY6vTwA&callback=initMap">
     </script>
