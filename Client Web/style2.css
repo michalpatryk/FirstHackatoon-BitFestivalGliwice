@@ -153,6 +153,21 @@ a.article:hover {
         height: 500px;  /* The height is 400 pixels */
         width: 100%;  /* The width is the width of the web page */
        }
+#dropButton{
+	height: 20px;
+	width: 20px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+}
+
+#blueRegister{
+	height: 20px;
+	width: 20px;
+	background-color: #bbb;
+
+	display: inline-block;
+}
 
 /* ---------------------------------------------------
     MEDIAQUERIES
