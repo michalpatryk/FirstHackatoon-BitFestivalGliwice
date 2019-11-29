@@ -99,11 +99,11 @@ app.get('/requests.html', (req, res) => {
 app.get('/addBubble', (req, res) => {
 
     const bubble = new Bubble({
-        type: req.body.type,
-        cordX: req.body.cordX,
-        cordY: req.body.cordY,
-        userId: req.body.userId.ObjectId,
-        description: req.body.description
+        type: req.query.type,
+        cordX: req.query.cordX,
+        cordY: req.query.cordY,
+        userId: req.query.userId.ObjectId,
+        description: req.query.description
     })
     bubble.save()
     res.json({ accepted: true })
@@ -169,6 +169,14 @@ app.get('/getBubbles', (req, res) => {
         else res.json({ bubbles: bubbles })
     })
 })
+
+app.get('/getBubblesForUser', (req, res) => {
+    Bubble.find({userId: req.query.userId  }, (err, bubbles) => {
+        if ((err) || (bubbles == null)) res.json({ bubbles: [] })
+        else res.json({ bubbles: bubbles })
+    })
+})
+
 
 app.use(function (req, res, next) {
     res.status(404).send("This is not the addres you are looking for.")
