@@ -9,7 +9,7 @@ app.use(bodyParser.json())
 
 
 
-mongoose.connect('mongodb+srv://admin:admin@sekcja-spalonych-tostow-ppujf.mongodb.net/bitfestival?retryWrites=true&w=majority',{ useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://admin:admin@sekcja-spalonych-tostow-ppujf.mongodb.net/bitfestival?retryWrites=true&w=majority',{ useUnifiedTopology: true, useNewUrlParser: true });
 
 const bubbleScheme = {
     type: String,
