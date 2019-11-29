@@ -164,7 +164,7 @@ app.get('/vote', async (req, res) => {
 })
 
 app.get('/getBubbles', (req, res) => {
-    Bubble.find({ cordX: { $gt: req.body.cordXmin }, cordX: { $lt: req.body.cordXmax }, cordY: { $gt: req.body.cordYmin }, cordY: { $lt: req.body.cordYmax } }, (err, bubbles) => {
+    Bubble.find({ cordX: { $gt: req.query.cordXmin }, cordX: { $lt: req.query.cordXmax }, cordY: { $gt: req.query.cordYmin }, cordY: { $lt: req.query.cordYmax } }, (err, bubbles) => {
         if ((err) || (bubbles == null)) res.json({ bubbles: [] })
         else res.json({ bubbles: bubbles })
     })
